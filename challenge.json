@@ -1,0 +1,7 @@
+{
+  "id": "expense-tracker",
+  "title": "Expense Tracker",
+  "difficulty": "beginner",
+  "starterOnly": true,
+  "privateTestsExcluded": true
+}
