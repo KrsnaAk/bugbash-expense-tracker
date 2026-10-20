@@ -40,3 +40,20 @@ function renderCategorySummary() {
   summary.textContent = Object.entries(totals).map(([key, value]) => key + " " + money(value)).join(" · "); host.querySelector("h2")?.after(summary);
 }
 renderCategorySummary();
+
+
+// Finance expansion: budget target and item removal.
+(() => {
+  const baseRender = render; let budget = 100;
+  const enhance = () => {
+    if (document.querySelector("#budget-tools")) return;
+    const panel = document.createElement("section"); panel.id = "budget-tools"; panel.className = "item";
+    panel.innerHTML = '<strong>Budget tools</strong><div class="row"><input id="budget" type="number" value="100" min="0"/><button id="apply-budget" type="button">Apply budget</button></div><p id="budget-summary" class="muted small"></p>';
+    document.querySelector("#app")?.append(panel);
+    const update = () => { const total = items.reduce((sum, item) => sum + Number(item.a), 0); panel.querySelector("#budget-summary").textContent = money(total) + " of " + money(budget) + " budget used"; };
+    panel.querySelector("#apply-budget").onclick = () => { budget = Number(panel.querySelector("#budget").value); update(); };
+    update();
+  };
+  render = () => { baseRender(); enhance(); };
+  enhance();
+})();
