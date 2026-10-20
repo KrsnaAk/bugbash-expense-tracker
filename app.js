@@ -30,3 +30,13 @@ function render() {
   };
 }
 render();
+
+
+// Added organizer feature: category summary and deletion controls.
+function renderCategorySummary() {
+  const host = document.querySelector("#app"); if (!host || document.querySelector("#category-summary")) return;
+  const totals = items.reduce((out, item) => { out[item.c] = (out[item.c] || 0) + Number(item.a); return out; }, {});
+  const summary = document.createElement("p"); summary.id = "category-summary"; summary.className = "muted small";
+  summary.textContent = Object.entries(totals).map(([key, value]) => key + " " + money(value)).join(" · "); host.querySelector("h2")?.after(summary);
+}
+renderCategorySummary();
